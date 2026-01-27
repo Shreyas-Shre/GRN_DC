@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GRN List</title>
+</head>
+<body>
+    <h2>Goods Receipt Notes</h2>
+
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>GRN No</th>
+            <th>Date</th>
+            <th>Supplier</th>
+            <th>Remarks</th>
+        </tr>
+
+        {% for grn in grns %}
+        <tr>
+            <td>{{ grn.grn_number }}</td>
+            <td>{{ grn.date }}</td>
+            <td>{{ grn.supplier_name }}</td>
+            <td>{{ grn.remarks }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <a href="/grn/new">Create New GRN</a>
+</body>
+</html>

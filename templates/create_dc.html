@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create DC</title>
+</head>
+<body>
+    <h2>Create Delivery Challan</h2>
+
+    <form method="post">
+        <p><strong>DC Number:</strong> {{ next_dc }}</p>
+
+
+        <label>Date</label><br>
+        <input type="date" name="date" required><br><br>
+
+        <label>Party Name</label><br>
+        <input type="text" name="party_name" required><br><br>
+
+        <label>Remarks</label><br>
+        <textarea name="remarks"></textarea><br><br>
+
+        <button type="submit">Save DC</button>
+    </form>
+
+    <br>
+    <a href="/dc">View DC List</a>
+</body>
+</html>

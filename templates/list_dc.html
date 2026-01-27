@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}DC List{% endblock %}
+
+{% block content %}
+<h2>Delivery Challans</h2>
+
+<table>
+    <tr>
+        <th>DC No</th>
+        <th>Date</th>
+        <th>Party</th>
+        <th>Remarks</th>
+    </tr>
+
+    {% for dc in dcs %}
+    <tr>
+        <td>
+            <a href="/dc/{{ dc['id'] }}">{{ dc['dc_number'] }}</a>
+        </td>
+        <td>{{ dc['date'] }}</td>
+        <td>{{ dc['party_name'] }}</td>
+        <td>{{ dc['remarks'] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View DC</title>
+</head>
+<body>
+    <h2>Delivery Challan</h2>
+
+    <p><strong>DC No:</strong> {{ dc.dc_number }}</p>
+    <p><strong>Date:</strong> {{ dc.date }}</p>
+    <p><strong>Party:</strong> {{ dc.party_name }}</p>
+    <p><strong>Remarks:</strong> {{ dc.remarks }}</p>
+
+    <h3>Items</h3>
+
+    {% if items %}
+    <table border="1" cellpadding="8">
+        <tr>
+            <th>Item Name</th>
+            <th>Quantity</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <td>{{ item.item_name }}</td>
+            <td>{{ item.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No items added.</p>
+    {% endif %}
+
+    <br>
+    <a href="/dc">Back to DC List</a>
+</body>
+</html>
