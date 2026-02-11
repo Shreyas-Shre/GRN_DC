@@ -345,8 +345,10 @@ def reset_db():
     return redirect(url_for("home"))
 
 
-print("ssss",app.url_map)
+# Initialize DB at startup logic
+# Check if DB exists, if not create it.
+if not os.path.exists(DB_NAME):
+    init_db()
 
 if __name__ == "__main__":
-    init_db()
     app.run(debug=True)
