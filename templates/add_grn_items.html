@@ -1,18 +1,18 @@
 {% extends "base.html" %}
-{% block title %}Add Items to DC{% endblock %}
+{% block title %}Add Items to GRN{% endblock %}
 
 {% block content %}
 <div class="max-w-6xl mx-auto">
     <div class="md:flex md:items-center md:justify-between mb-6">
         <div class="flex-1 min-w-0">
             <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
-                Add Items to Delivery Challan
+                Add Items to Goods Receipt Note
             </h2>
         </div>
         <div class="mt-4 flex md:mt-0 md:ml-4">
-            <a href="/dc/{{ dc_id }}"
+            <a href="/grn/{{ grn_id }}"
                 class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                Done & View DC
+                Done & View GRN
             </a>
         </div>
     </div>
@@ -22,53 +22,30 @@
         <div class="bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
                 <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Add New Item</h3>
-                <form method="post" x-data="{ 
-                    selectedItem: '', 
-                    availableQty: 0,
-                    updateQty() {
-                        const option = this.$refs.select.options[this.$refs.select.selectedIndex];
-                        if (option) {
-                            this.availableQty = option.dataset.qty;
-                            this.$refs.itemNameInput.value = option.dataset.name;
-                        }
-                    }
-                }">
+                <form method="post" action="{{ url_for('add_grn_items', grn_id=grn_id) }}">
                     <div class="space-y-6">
                         <div>
-                            <label for="grn_item_id" class="block text-sm font-medium text-gray-700">Source GRN
-                                Item</label>
-                            <select id="grn_item_id" name="grn_item_id" x-ref="select" @change="updateQty()" required
-                                class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md border">
-                                <option value="" disabled selected>Select an item...</option>
-                                {% for g in grn_items %}
-                                <option value="{{ g['id'] }}" data-qty="{{ g['remaining_qty'] }}"
-                                    data-name="{{ g['item_name'] }}">
-                                    {{ g['item_name'] }} (Available: {{ g['remaining_qty'] }})
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <label for="item_name" class="block text-sm font-medium text-gray-700">Item Name</label>
+                            <div class="mt-1">
+                                <input type="text" name="item_name" id="item_name" required
+                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                                    placeholder="e.g., Widget A">
+                            </div>
                         </div>
 
-                        <!-- Hidden Item Name Field (Populated via JS/Alpine for simplicity, though backend could look it up) -->
-                        <input type="hidden" name="item_name" x-ref="itemNameInput">
-
                         <div>
-                            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity to
-                                Issue</label>
-                            <div class="mt-1 relative rounded-md shadow-sm">
-                                <input type="number" name="quantity" id="quantity" required min="1" :max="availableQty"
-                                    class="focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                            <label for="quantity" class="block text-sm font-medium text-gray-700">Quantity</label>
+                            <div class="mt-1">
+                                <input type="number" name="quantity" id="quantity" required min="1"
+                                    class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
                                     placeholder="0">
                             </div>
-                            <p class="mt-2 text-sm text-gray-500" x-show="availableQty > 0">
-                                Max available: <span x-text="availableQty" class="font-bold"></span>
-                            </p>
                         </div>
 
                         <div class="pt-2">
                             <button type="submit"
                                 class="w-full inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Add Item to DC
+                                Add Item to GRN
                             </button>
                         </div>
                     </div>
@@ -79,7 +56,7 @@
         <!-- Current Items List -->
         <div class="bg-white shadow sm:rounded-lg">
             <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Items Added to this DC</h3>
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Items Added to this GRN</h3>
 
                 {% if current_items %}
                 <div class="flow-root">
@@ -107,7 +84,7 @@
                             d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
                     </svg>
                     <h3 class="mt-2 text-sm font-medium text-gray-900">No items added</h3>
-                    <p class="mt-1 text-sm text-gray-500">Use the form to add items from your inventory.</p>
+                    <p class="mt-1 text-sm text-gray-500">Use the form to add items you have received.</p>
                 </div>
                 {% endif %}
             </div>

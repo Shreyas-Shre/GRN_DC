@@ -1,28 +1,77 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Create DC</title>
-</head>
-<body>
-    <h2>Create Delivery Challan</h2>
+{% extends "base.html" %}
 
-    <form method="post">
-        <p><strong>DC Number:</strong> {{ next_dc }}</p>
+{% block title %}Create New DC{% endblock %}
 
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <div class="md:flex md:items-center md:justify-between mb-6">
+        <div class="flex-1 min-w-0">
+            <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+                Create Delivery Challan
+            </h2>
+        </div>
+    </div>
 
-        <label>Date</label><br>
-        <input type="date" name="date" required><br><br>
+    <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <form method="post" action="{{ url_for('create_dc') }}">
+                <div class="grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
 
-        <label>Party Name</label><br>
-        <input type="text" name="party_name" required><br><br>
+                    <div class="sm:col-span-6">
+                        <label class="block text-sm font-medium text-gray-700">
+                            DC Number
+                        </label>
+                        <div class="mt-1">
+                            <input type="text" disabled value="{{ next_dc }}"
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md bg-gray-100 text-gray-500 cursor-not-allowed">
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500">Auto-generated DC Number</p>
+                    </div>
 
-        <label>Remarks</label><br>
-        <textarea name="remarks"></textarea><br><br>
+                    <div class="sm:col-span-3">
+                        <label for="date" class="block text-sm font-medium text-gray-700">
+                            Date
+                        </label>
+                        <div class="mt-1">
+                            <input type="date" name="date" id="date" required
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border">
+                        </div>
+                    </div>
 
-        <button type="submit">Save DC</button>
-    </form>
+                    <div class="sm:col-span-3">
+                        <label for="party_name" class="block text-sm font-medium text-gray-700">
+                            Party Name
+                        </label>
+                        <div class="mt-1">
+                            <input type="text" name="party_name" id="party_name" required
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md p-2 border"
+                                placeholder="Enter party name">
+                        </div>
+                    </div>
 
-    <br>
-    <a href="/dc">View DC List</a>
-</body>
-</html>
+                    <div class="sm:col-span-6">
+                        <label for="remarks" class="block text-sm font-medium text-gray-700">
+                            Remarks
+                        </label>
+                        <div class="mt-1">
+                            <textarea id="remarks" name="remarks" rows="3"
+                                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md p-2"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex justify-end">
+                    <a href="/dc"
+                        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 mr-3">
+                        Cancel
+                    </a>
+                    <button type="submit"
+                        class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Convert to DC & Add Items
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
